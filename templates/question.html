@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question {{ step + 1 }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="card">
+    <p class="step">Question {{ step + 1 }} of {{ total }}</p>
+    <h1>{{ question.prompt }}</h1>
+
+    <form method="POST" action="{{ url_for('question', step=step) }}">
+      <div class="choices">
+        {% for value, label in question.answers %}
+        <button type="submit" name="{{ question.key }}" value="{{ value }}" class="choice">
+          {{ label }}
+        </button>
+        {% endfor %}
+      </div>
+    </form>
+
+    <a class="back" href="{{ url_for('index') }}">← Start over</a>
+  </main>
+</body>
+</html>

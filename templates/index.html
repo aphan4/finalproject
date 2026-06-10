@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="card">
+    <h1>Don't know what to eat?</h1>
+    <p class="sub">Answer a few quick questions to figure out what you're craving and where you can find it!</p>
+
+    {% if not has_key %}
+    <p class="note">No Google API key set yet, so restaurant results will be skipped. Add your key to <code>keys.py</code> (see README).</p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('start') }}">
+      <label class="field">
+        <span class="field__label">Where are you?</span>
+        <input type="text" name="location" value="Seattle, WA" placeholder="e.g. Tacoma, WA">
+      </label>
+      <button type="submit">Start</button>
+    </form>
+  </main>
+</body>
+</html>

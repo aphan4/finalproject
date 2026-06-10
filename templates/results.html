@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="card">
+    <h1>You should eat...</h1>
+
+    {% if chosen %}
+    <p class="chosen">Based on your picks: {{ chosen | join(" · ") }}</p>
+    {% endif %}
+
+    {% for card in cards %}
+    <div class="pick">
+      <h2> {{ card.food.name }}</h2>
+
+      {% if card.restaurants %}
+      <p class="where">Near {{ location }}:</p>
+      <ul>
+        {% for r in card.restaurants %}
+        <li>
+          <strong>{{ r.name }}</strong>
+          {% if r.rating %}<span class="rating">{{ r.rating }} ★</span>{% endif %}
+          {% if r.address %}<div class="addr"><a href="{{ r.maps_url }}" target="_blank" rel="noopener">{{ r.address }}</a></div>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% elif not has_key %}
+      <p class="addr">(Add a Google API key in keys.py to see nearby restaurants.)</p>
+      {% else %}
+      <p class="addr">No restaurants found near {{ location }}.</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <a class="back" href="{{ url_for('index') }}">← Take the quiz again</a>
+  </main>
+</body>
+</html>
